@@ -131,7 +131,12 @@ test("NON_SECRET_ENV_KEYS covers every structural key buildContainerEnv writes",
 		egress: true,
 		home: "/home/pi",
 		exitAuth: true,
+		packageCanaryPath: "/opt/pi-global/canary",
+		idleMs: 900000,
+		stallMs: 600000,
+		credentialRefresh: true,
 	});
+	assert.deepEqual([env.PI_JOB_IDLE_MS, env.PI_JOB_STALL_MS, env.PI_CREDENTIAL_REFRESH], ["900000", "600000", "1"], "the activity limits and the renewal flag are structural (#888)");
 	assert.equal(env.PI_CODEMODE_MAX_WORKERS, "8", "the memory-derived count is structural, including on OpenShell (#693)");
 	assert.deepEqual([env.PI_JOB_SIZE_CPUS, env.PI_JOB_SIZE_MEMORY_MIB], ["2", "4096"], "the job's size is structural too (#865)");
 	const workerSet = egressEnv({ armed: true });

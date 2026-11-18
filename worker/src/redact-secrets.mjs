@@ -181,6 +181,14 @@ export const NON_SECRET_ENV_KEYS = new Set([
 	"PI_JOB_LAYOUT",
 	// Issue #730: `1`, the readable runner's flag, never a secret; on openshell it must ride the exec's --env.
 	"PI_RUNNER_OBSERVABLE",
+	// Issue #888: the activity watch's limits in milliseconds and the renewal flag (`1`), never secrets. Unlisted, a
+	// value as common as `1` was a "secret" that every workspace contains, so the checkpoint scanner refused the
+	// checkpoint of every job armed for renewal, and a recovered run had nothing to resume from.
+	"PI_JOB_IDLE_MS",
+	"PI_JOB_STALL_MS",
+	"PI_CREDENTIAL_REFRESH",
+	// The package canary's container path (`packageCanaryPath`), a fixed location the worker chose, never a secret.
+	"PI_PACKAGE_CANARY",
 	"HOME",
 	KEYLESS_ENV_NAME,
 	...FORGE_HOST_VARS,
